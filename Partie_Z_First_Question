@@ -1,0 +1,121 @@
+
+  SOIENT
+       R : ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       T UN TABLEAU ( 10 ) DE ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       Rech2 , Inser2 , Parcour_inordre : ACTION ;
+       I UN ENTIER ;
+       A : CAR ;
+      
+   DEBUT
+       A := 'N' ;
+       APPEL Inser2 ( R , 'aymen' , 'berriche' , 19 , A ) ;
+       APPEL Parcour_inordre ( R ) ;
+      
+   FIN
+  /**************************************************************************/
+   ACTION Rech2 ( R , Age , Pr , P )
+   SOIENT
+       Trouve UN BOOLEEN ;
+       R , Pr , P , K : ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       Age UN ENTIER ;
+      
+   DEBUT
+       Trouve := FAUX ;
+       Pr := NIL ;
+       TQ ( R # NIL ) ET ( NON Trouve ) :
+           SI STRUCT ( INFO ( R ) , 3 ) = Age :
+               Trouve := VRAI ;
+              
+           SINON
+               Pr := R ;
+               SI Age > STRUCT ( INFO ( R ) , 3 ) :
+                   R := FD ( R ) ;
+                  
+               SINON
+                   R := FG ( R ) ;
+                  
+               FINSI ;
+              
+           FINSI ;
+          
+       FTQ ;
+       P := R ;
+      
+   FIN
+  /****************************************************************************/
+   ACTION Inser2 ( R , Nom , Prenom , Age , Resultat )
+   SOIENT
+       Q , Pr , P , R , S : POINTEURS VERS ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       Age UN ENTIER ;
+       Nom , Prenom : CHAINES ;
+       Resultat : CAR ;
+       U UNE STRUCTURE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+      
+   DEBUT
+       S := R ;
+       SI S = NIL :
+           CREERNOEUD ( S ) ;
+           ALLOC_STRUCT ( U ) ;
+           AFF_INFO ( S , U ) ;
+           AFF_STRUCT ( INFO ( S ) , 1 , Nom ) ;
+           AFF_STRUCT ( INFO ( S ) , 2 , Prenom ) ;
+           AFF_STRUCT ( INFO ( S ) , 3 , Age ) ;
+           AFF_STRUCT ( INFO ( S ) , 4 , Resultat ) ;
+           R := S ;
+          
+       SINON
+           APPEL Rech2 ( S , Age , Pr , P ) ;
+           SI P = NIL :
+               CREERNOEUD ( Q ) ;
+               AFF_STRUCT ( INFO ( Q ) , 1 , Nom ) ;
+               AFF_STRUCT ( INFO ( Q ) , 2 , Prenom ) ;
+               AFF_STRUCT ( INFO ( Q ) , 3 , Age ) ;
+               AFF_STRUCT ( INFO ( Q ) , 4 , Resultat ) ;
+               AFF_FG ( Q , NIL ) ;
+               AFF_FD ( Q , NIL ) ;
+               SI Age > STRUCT ( INFO ( Pr ) , 3 ) :
+                   AFF_FD ( Pr , Q ) ;
+                  
+               SINON
+                   AFF_FG ( Pr , Q ) ;
+                  
+               FINSI ;
+              
+           FINSI ;
+           S := Pr ;
+          
+       FINSI ;
+      
+   FIN
+  /*****************************************************************************/
+   ACTION Parcour_inordre ( R )
+   SOIENT
+       Pil UNE PILE DE ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       P , R : POINTEUR VERS ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       Fini UN BOOLEEN ;
+      
+   DEBUT
+       Fini := FAUX ;
+       TQ NON Fini :
+           TQ R <> NIL :
+               EMPILER ( Pil , R ) ;
+               R := FG ( R ) ;
+              
+           FTQ ;
+           SI NON PILEVIDE ( Pil ) :
+               DEPILER ( Pil , R ) ;
+               ECRIRE ( 'Nom= ' , STRUCT ( INFO ( R ) , 1 ) ) ;
+               ECRIRE ( 'prenom= ' , STRUCT ( INFO ( R ) , 2 ) ) ;
+               ECRIRE ( 'Age= ' , STRUCT ( INFO ( R ) , 3 ) ) ;
+               ECRIRE ( 'Resultat= ' , STRUCT ( INFO ( R ) , 4 ) ) ;
+               ECRIRE ( '-----------------' ) ;
+               R := FD ( R ) ;
+              
+           SINON
+               Fini := VRAI ;
+              
+           FINSI ;
+          
+       FTQ ;
+      
+   FIN
