@@ -1,16 +1,15 @@
 
-  SOIENT
+   SOIENT
        R : ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
        T UN TABLEAU ( 10 ) DE ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
-       Rech2 , Inser2 , Parcour_inordre : ACTION ;
-       I UN ENTIER ;
+       Rech2 , Inser2 , Parcour_inordre , Creation_pays : ACTION ;
+       Gen_chaine : FONCTION ( CHAINE ) ;
+       Gen_result : FONCTION ( CAR ) ;
+       I , J UN ENTIER ;
        A : CAR ;
       
    DEBUT
-       A := 'N' ;
-       APPEL Inser2 ( R , 'aymen' , 'berriche' , 19 , A ) ;
-       APPEL Parcour_inordre ( R ) ;
-      
+       APPEL Creation_pays ( T ) ;
    FIN
   /**************************************************************************/
    ACTION Rech2 ( R , Age , Pr , P )
@@ -43,15 +42,19 @@
       
    FIN
   /****************************************************************************/
-   ACTION Inser2 ( R , Nom , Prenom , Age , Resultat )
+   ACTION Inser2 ( R )
    SOIENT
        Q , Pr , P , R , S : POINTEURS VERS ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
        Age UN ENTIER ;
        Nom , Prenom : CHAINES ;
        Resultat : CAR ;
-       U UNE STRUCTURE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       U , V DES STRUCTURES ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
       
    DEBUT
+       Nom := Gen_chaine ( 3 , 10 ) ;
+       Prenom := Gen_chaine ( 3 , 10 ) ;
+       Age := ALEANOMBRE ( 100 ) ;
+       Resultat := Gen_result ( Resultat ) ;
        S := R ;
        SI S = NIL :
            CREERNOEUD ( S ) ;
@@ -67,6 +70,8 @@
            APPEL Rech2 ( S , Age , Pr , P ) ;
            SI P = NIL :
                CREERNOEUD ( Q ) ;
+               ALLOC_STRUCT ( V ) ;
+               AFF_INFO ( Q , V ) ;
                AFF_STRUCT ( INFO ( Q ) , 1 , Nom ) ;
                AFF_STRUCT ( INFO ( Q ) , 2 , Prenom ) ;
                AFF_STRUCT ( INFO ( Q ) , 3 , Age ) ;
@@ -117,5 +122,58 @@
            FINSI ;
           
        FTQ ;
+      
+   FIN
+   FONCTION Gen_chaine ( Inf , Sup ) : CHAINE ;
+   SOIENT
+       Inf , Sup , I : ENTIER ;
+       Ch : CHAINE ;
+      
+   DEBUT
+       I := ALEANOMBRE ( Sup ) + 1 ;
+       Ch := ALEACHAINE ( I ) ;
+       TQ LONGCHAINE ( Ch ) < Inf :
+           I := ALEANOMBRE ( Sup ) + 1 ;
+           Ch := ALEACHAINE ( I ) ;
+          
+       FTQ ;
+       Gen_chaine := Ch ;
+      
+   FIN
+  /**************************************************************************/
+   FONCTION Gen_result ( C ) : CAR ;
+   SOIENT
+       C : CAR ;
+      
+   DEBUT
+       SI ALEANOMBRE ( 2 ) = 1 :
+           Gen_result := 'R' ;
+          
+       SINON
+           Gen_result := 'D' ;
+          
+       FSI ;
+      
+   FIN
+  /*************************************************************************/
+   ACTION Creation_pays ( T )
+   SOIENT
+       T UN TABLEAU ( 10 ) DE ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       J , I UN ENTIER ;
+      
+   DEBUT
+       POUR J := 1 , 10 :
+           POUR I := 1 , ALEANOMBRE ( 20 ) + 1 :
+               APPEL Inser2 ( R ) ;
+              
+           FINPOUR ;
+           AFF_ELEMENT ( T [ J ] , R ) ;
+          
+       FINPOUR ;
+       POUR J := 1 , 10 :
+           ECRIRE ( '//*****************Pays******************//' , J ) ;
+           APPEL Parcour_inordre ( ELEMENT ( T [ J ] ) ) ;
+          
+       FINPOUR ;
       
    FIN
