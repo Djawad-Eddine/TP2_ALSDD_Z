@@ -2,7 +2,7 @@
    SOIENT
        R : ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
        T UN TABLEAU ( 10 ) DE ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
-       Rech2 , Inser2 , Parcour_inordre , Creation_pays : ACTION ;
+       Rech_nom , Rech_prenom , Inser2 , Parcour_inordre , Creation_pays : ACTION ;
        Gen_chaine : FONCTION ( CHAINE ) ;
        Gen_result : FONCTION ( CAR ) ;
        I , J UN ENTIER ;
@@ -10,19 +10,21 @@
       
    DEBUT
        APPEL Creation_pays ( T ) ;
+      
    FIN
   /**************************************************************************/
-   ACTION Rech2 ( R , Age , Pr , P )
+   ACTION Rech_nom ( R , Nom , Age , Pr , P )
    SOIENT
        Trouve UN BOOLEEN ;
        R , Pr , P , K : ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
        Age UN ENTIER ;
+       Nom UNE CHAINE ;
       
    DEBUT
        Trouve := FAUX ;
        Pr := NIL ;
        TQ ( R # NIL ) ET ( NON Trouve ) :
-           SI STRUCT ( INFO ( R ) , 3 ) = Age :
+           SI STRUCT ( INFO ( R ) , 1 ) = Nom :
                Trouve := VRAI ;
               
            SINON
@@ -42,9 +44,40 @@
       
    FIN
   /****************************************************************************/
+   ACTION Rech_prenom ( R , Prenom , Age , Pr , P )
+   SOIENT
+       Trouve UN BOOLEEN ;
+       R , Pr , P , K : ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       Age UN ENTIER ;
+       Prenom UNE CHAINE ;
+      
+   DEBUT
+       Trouve := FAUX ;
+       Pr := NIL ;
+       TQ ( R # NIL ) ET ( NON Trouve ) :
+           SI STRUCT ( INFO ( R ) , 2 ) = Prenom :
+               Trouve := VRAI ;
+              
+           SINON
+               Pr := R ;
+               SI Age > STRUCT ( INFO ( R ) , 3 ) :
+                   R := FD ( R ) ;
+                  
+               SINON
+                   R := FG ( R ) ;
+                  
+               FINSI ;
+              
+           FINSI ;
+          
+       FTQ ;
+       P := R ;
+      
+   FIN
+  /**************************************************************************/
    ACTION Inser2 ( R )
    SOIENT
-       Q , Pr , P , R , S : POINTEURS VERS ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
+       Q , Pr , P , K , R , S : POINTEURS VERS ARB DE ( CHAINE , CHAINE , ENTIER , CAR ) DYNAMIQUE ;
        Age UN ENTIER ;
        Nom , Prenom : CHAINES ;
        Resultat : CAR ;
@@ -67,8 +100,10 @@
            R := S ;
           
        SINON
-           APPEL Rech2 ( S , Age , Pr , P ) ;
-           SI P = NIL :
+           APPEL Rech_nom ( S , Nom , Age , Pr , P ) ;
+           S := R ;
+           APPEL Rech_prenom ( S , Prenom , Age , Pr , K ) ;
+           SI ( P = NIL ) ET ( K = NIL ) :
                CREERNOEUD ( Q ) ;
                ALLOC_STRUCT ( V ) ;
                AFF_INFO ( Q , V ) ;
