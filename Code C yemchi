@@ -7,6 +7,7 @@
 
   #include <stdio.h>
   #include <stdlib.h>
+  #include <string.h>
 
   typedef int bool ;
   typedef char * string255 ;
@@ -355,9 +356,9 @@
 
 
   /** Variables du programme principal **/
-  Pointeur_ATssic R =NULL;
-  Pointeur_ATiic R2= NULL;
-  Typevect_V10ATssic T = NULL;
+
+
+
   int I;
   int J;
   string2 A;
@@ -406,7 +407,7 @@
   void Creation_pays_saff (Typevect_V10ATssic *T);
   void Arb_global (Typevect_V10ATssic *T , Pointeur_ATiic *R2);
   void Parcour_inordre_glb (Pointeur_ATiic *S2);
-  int  Pourcentage (Pointeur_ATiic *S2 , int *Inf , int *Sup , string2 *Resultat) ;
+  float  Pourcentage (Pointeur_ATiic *S2 , int *Inf , int *Sup , string2 *Resultat) ;
 
   /**************************************************************************/
   void Rech_nom (Pointeur_ATssic *R , string255 *Nom , int *Age , Pointeur_ATssic *Pr , Pointeur_ATssic *P)
@@ -548,7 +549,6 @@
    void Parcour_inordre (Pointeur_ATssic *R)
     {
       /** Variables locales **/
-      Pointeur_ATssic P;
       Pointeur_ATssic _Px1;
       Pointeur_ATssic _Px2;
 
@@ -616,6 +616,7 @@
   void Creation_pays (Typevect_V10ATssic *T)
     {
       /** Variables locales **/
+      Pointeur_ATssic R =NULL;
       int I;
       int J;
 
@@ -697,7 +698,7 @@
     {
       /** Variables locales **/
       bool Trouve;
-      Pointeur_ATiic K;
+      Pointeur_ATiic K=NULL;
 
       /** Corps du module **/
      Trouve  =  False ;
@@ -729,9 +730,9 @@
     {
       /** Variables locales **/
       int  Nb_occur2 ;
-      Pointeur_PATssic Pil;
-      Pointeur_ATssic P;
-      Pointeur_ATssic R;
+      Pointeur_PATssic Pil=NULL;
+      Pointeur_ATssic P=NULL;
+      Pointeur_ATssic R=NULL;
       bool Fini;
       int Cpt;
       int J;
@@ -772,7 +773,7 @@
   void Creation_pays_saff (Typevect_V10ATssic *T)
     {
       /** Variables locales **/
-      Pointeur_ATssic R;
+      Pointeur_ATssic R =NULL;
       int J;
       int I;
 
@@ -822,49 +823,38 @@
   void Parcour_inordre_glb (Pointeur_ATiic *S2)
     {
       /** Variables locales **/
-      Pointeur_PATiic Pil;
-      Pointeur_ATiic P;
-      Pointeur_ATiic R2;
-      bool Fini;
+
+      Pointeur_ATiic R2=NULL;
+      Pointeur_ATiic _Px1=NULL;
+      Pointeur_ATiic _Px2=NULL;
 
       /** Corps du module **/
      R2  =  *S2 ;
-     Fini  =  False ;
-     while( ! Fini)  {
-       while( R2 != NULL)  {
-         Empiler_PATiic (& Pil , R2 ) ;
-         R2  =  Fg_ATiic ( R2 ) ;
-
-       } ;
-       if( ! Pilevide_PATiic ( Pil ))   {
-         Depiler_PATiic (& Pil , &R2 ) ;
-         printf ( " %s", "-----------------" ) ;
-         printf ( " %s", "Age= " );
-         printf ( " %d", Struct1_Tiic(Info_ATiic(R2)) ) ;
-         printf ( " %s", "Nombre de occurences= " );
-         printf ( " %d", Struct2_Tiic(Info_ATiic(R2)) ) ;
-         printf ( " %s", "Resultat " );
-         printf ( " %s", Struct3_Tiic(Info_ATiic(R2)) ) ;
-         R2  =  Fd_ATiic ( R2 ) ;
-         }
-       else
-         {
-         Fini  =  True ;
-
-       } ;
+     if( R2 != NULL)   {
+       _Px1 =  Fg_ATiic(R2 ) ;
+       Parcour_inordre_glb ( &_Px1) ;
+       printf ( " %s\n", "-----------------" ) ;
+       printf ( " %s", "Age= " );
+       printf ( " %d\n", Struct1_Tiic(Info_ATiic(R2)) ) ;
+       printf ( " %s", "Nombre de occurences= " );
+       printf ( " %d\n", Struct2_Tiic(Info_ATiic(R2)) ) ;
+       printf ( " %s", "Resultat " );
+       printf ( " %s\n", Struct3_Tiic(Info_ATiic(R2)) ) ;
+       _Px2 =  Fd_ATiic(R2 ) ;
+       Parcour_inordre_glb ( &_Px2) ;
 
      } ;
 
     }
   /****************************************************************************/
-  int  Pourcentage (Pointeur_ATiic *S2 , int *Inf , int *Sup , string2 *Resultat)
+  float  Pourcentage (Pointeur_ATiic *S2 , int *Inf , int *Sup , string2 *Resultat)
     {
       /** Variables locales **/
-      int  Pourcentage2 ;
-      Pointeur_PATiic Pil;
-      Pointeur_ATiic R2;
-      int Nb_occ;
-      int Nb_pers;
+      float  Pourcentage2 ;
+      Pointeur_PATiic Pil=NULL;
+      Pointeur_ATiic R2=NULL;
+      float Nb_occ;
+      float Nb_pers;
       bool Fini;
 
       /** Corps du module **/
@@ -874,21 +864,21 @@
      Fini  =  False ;
      while( ! Fini)  {
        while( R2 != NULL)  {
-         Empiler_PATiic (& Pil , R2 ) ;
-         R2  =  Fg_ATiic ( R2 ) ;
+         Empiler_PATiic(&Pil , R2 ) ;
+         R2  =  Fg_ATiic(R2 ) ;
 
        } ;
-       if( ! Pilevide_PATiic ( Pil ))   {
-         Depiler_PATiic (& Pil , &R2 ) ;
-         Nb_occ  =  Nb_occ + Struct2_Tiic ( Info_ATiic ( R2 )  ) ;
-         if( ( ( Struct1_Tiic ( Info_ATiic ( R2 )  ) <= *Sup ) && ( Struct1_Tiic ( Info_ATiic ( R2 )  ) >= *Inf ) ))   {
-           if( (strcmp( Struct3_Tiic ( Info_ATiic ( R2 )  ), *Resultat) == 0  ))   {
-             Nb_pers  =  Nb_pers + Struct2_Tiic ( Info_ATiic ( R2 )  ) ;
+       if( ! Pilevide_PATiic(Pil ))   {
+         Depiler_PATiic(&Pil , &R2 ) ;
+         Nb_occ  =  Nb_occ + Struct2_Tiic(Info_ATiic(R2 )  ) ;
+         if( ( ( Struct1_Tiic(Info_ATiic(R2 )  ) <= *Sup ) && ( Struct1_Tiic(Info_ATiic(R2 )  ) >= *Inf ) ))   {
+           if( (strcmp( Struct3_Tiic(Info_ATiic(R2 )  ), *Resultat) == 0  ))   {
+             Nb_pers  =  Nb_pers + Struct2_Tiic(Info_ATiic(R2 )  ) ;
 
            } ;
 
          } ;
-         R2  =  Fd_ATiic ( R2 ) ;
+         R2  =  Fd_ATiic(R2 ) ;
          }
        else
          {
@@ -904,19 +894,28 @@
 
   int main(int argc, char *argv[])
     {
-     T = malloc(10 * sizeof(Pointeur_ATssic));
+    Typevect_V10ATssic T =NULL;
+    //1er et 2eme question
+     /*T = malloc(10 * sizeof(Pointeur_ATssic));
      int _Izw2;for (_Izw2=0; _Izw2<10; ++_Izw2)
        T[_Izw2] = malloc( sizeof(Pointeur_ATssic ));
      A = malloc(2 * sizeof(char));
-     Creation_pays ( & T ) ;
-    /*3eme et 4eme*/
-    /*appel arb_global(t,r2);*/
-    /*5eme questoin*/
-    /* APPEL Arb_global ( T , R2 ) ; */
-    /* A := 'D' ;*/
-    /*ECRIRE ( Pourcentage ( R2 , 0 , 70 , A ) ) ;*/
+     srand(time(0));
+     Creation_pays ( & T ) ;*/
+     // 3-4-5 questions 
+      T = malloc(10 * sizeof(Pointeur_ATssic));
+     int _Izw2;for (_Izw2=0; _Izw2<10; ++_Izw2)
+       T[_Izw2] = malloc( sizeof(Pointeur_ATssic));
+     A = malloc(2 * sizeof(string2));
+     Pointeur_ATiic R2=NULL;
+     srand(time(0));
+     Arb_global ( & T , & R2 ) ;
+     strcpy (A,   "D") ;
+     int _Px1 =  0 ;
+     int _Px2 =  70 ;
+     printf ( "Le pourcentage est : %.2f%%", Pourcentage(&R2,&_Px1,&_Px2,&A) ) ;
 
 
-      system("PAUSE");
+
       return 0;
     }
