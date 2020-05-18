@@ -1,0 +1,1569 @@
+  /**--------------------------------------------------------**/
+  /**       C o n v e r s i o n   Z vers C (Standard)        **/
+  /**             Réalisée par Pr D.E ZEGOUR                 **/
+  /**             E S I - Alger                              **/
+  /**             Copywrite 2014                             **/
+  /**--------------------------------------------------------**/
+
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <windows.h>
+  //Pour l'affichage
+  #define selected_color 9
+  #define selected_background 7
+  #define not_selected_color 15
+  #define not_selected_background 0
+  typedef int bool ;
+  typedef char * string255 ;
+  typedef char * string2 ;
+
+  #define True 1
+  #define False 0
+
+  /** Implémentation **\: ARBRE BINAIRE DE STRUCTURES**/
+
+  /** Structures statiques **/
+
+  typedef struct Tssic Type_Tssic  ;
+  typedef Type_Tssic * Typestr_Tssic ;
+  typedef string255 Type1_Tssic  ;
+  typedef string255 Type2_Tssic  ;
+  typedef int Type3_Tssic  ;
+  typedef string2 Type4_Tssic  ;
+  struct Tssic
+    {
+      Type1_Tssic Champ1 ;
+      Type2_Tssic Champ2 ;
+      Type3_Tssic Champ3 ;
+      Type4_Tssic Champ4 ;
+    };
+
+  Type1_Tssic Struct1_Tssic ( Typestr_Tssic S)
+    {
+      return  S->Champ1 ;
+    }
+
+  Type2_Tssic Struct2_Tssic ( Typestr_Tssic S)
+    {
+      return  S->Champ2 ;
+    }
+
+  Type3_Tssic Struct3_Tssic ( Typestr_Tssic S)
+    {
+      return  S->Champ3 ;
+    }
+
+  Type4_Tssic Struct4_Tssic ( Typestr_Tssic S)
+    {
+      return  S->Champ4 ;
+    }
+
+  void Aff_struct1_Tssic ( Typestr_Tssic S, Type1_Tssic Val )
+    {
+      strcpy( S->Champ1 , Val );
+    }
+
+  void Aff_struct2_Tssic ( Typestr_Tssic S, Type2_Tssic Val )
+    {
+      strcpy( S->Champ2 , Val );
+    }
+
+  void Aff_struct3_Tssic ( Typestr_Tssic S, Type3_Tssic Val )
+    {
+       S->Champ3 = Val ;
+    }
+
+  void Aff_struct4_Tssic ( Typestr_Tssic S, Type4_Tssic Val )
+    {
+      strcpy( S->Champ4 , Val );
+    }
+
+
+  /** Arbres de recherche binaire **/
+
+  typedef Typestr_Tssic Typeelem_ATssic   ;
+  typedef struct Noeud_ATssic * Pointeur_ATssic ;
+
+  struct Noeud_ATssic
+    {
+      Typeelem_ATssic  Val ;
+      Pointeur_ATssic Fg ;
+      Pointeur_ATssic Fd ;
+      Pointeur_ATssic Pere ;
+     } ;
+
+  Typeelem_ATssic Info_ATssic( Pointeur_ATssic P )
+    { return P->Val;   }
+
+  Pointeur_ATssic Fg_ATssic( Pointeur_ATssic P)
+    { return P->Fg ; }
+
+  Pointeur_ATssic Fd_ATssic( Pointeur_ATssic P)
+    { return P->Fd ; }
+
+  Pointeur_ATssic Pere_ATssic( Pointeur_ATssic P)
+    { return P->Pere ; }
+
+  void Aff_info_ATssic ( Pointeur_ATssic P, Typeelem_ATssic Val)
+    {
+      Typeelem_ATssic _Temp ;
+      _Temp = malloc(sizeof(Type_Tssic));
+      _Temp->Champ1 = malloc(255 * sizeof(char));
+      _Temp->Champ2 = malloc(255 * sizeof(char));
+      _Temp->Champ4 = malloc(2 * sizeof(char));
+      /* Affectation globale de structure */
+      strcpy(_Temp->Champ1, Val->Champ1);
+      strcpy(_Temp->Champ2, Val->Champ2);
+      _Temp->Champ3 = Val->Champ3;
+      strcpy(_Temp->Champ4, Val->Champ4);
+      Val = _Temp ;
+       P->Val = Val ;
+    }
+
+  void Aff_fg_ATssic( Pointeur_ATssic P, Pointeur_ATssic Q)
+    { P->Fg =  Q;  }
+
+  void Aff_fd_ATssic( Pointeur_ATssic P, Pointeur_ATssic Q)
+    { P->Fd =  Q ; }
+
+  void Aff_pere_ATssic( Pointeur_ATssic P, Pointeur_ATssic Q)
+    { P->Pere =  Q ; }
+
+  void Creernoeud_ATssic( Pointeur_ATssic *P)
+    {
+      *P = (struct Noeud_ATssic *) malloc( sizeof( struct Noeud_ATssic))   ;
+      (*P)->Val = malloc(sizeof(Type_Tssic));
+      (*P)->Val->Champ1 = malloc( 255 * sizeof(char));
+      (*P)->Val->Champ2 = malloc( 255 * sizeof(char));
+      (*P)->Val->Champ4 = malloc( 2 * sizeof(char));
+      (*P)->Fg = NULL;
+      (*P)->Fd = NULL;
+      (*P)->Pere = NULL;
+    }
+
+  void Liberernoeud_ATssic( Pointeur_ATssic P)
+    { free( P ) ; }
+
+
+  /** Implémentation **\: ARBRE BINAIRE DE STRUCTURES**/
+
+  /** Structures statiques **/
+
+  typedef struct Tiic Type_Tiic  ;
+  typedef Type_Tiic * Typestr_Tiic ;
+  typedef int Type1_Tiic  ;
+  typedef int Type2_Tiic  ;
+  typedef string2 Type3_Tiic  ;
+  struct Tiic
+    {
+      Type1_Tiic Champ1 ;
+      Type2_Tiic Champ2 ;
+      Type3_Tiic Champ3 ;
+    };
+
+  Type1_Tiic Struct1_Tiic ( Typestr_Tiic S)
+    {
+      return  S->Champ1 ;
+    }
+
+  Type2_Tiic Struct2_Tiic ( Typestr_Tiic S)
+    {
+      return  S->Champ2 ;
+    }
+
+  Type3_Tiic Struct3_Tiic ( Typestr_Tiic S)
+    {
+      return  S->Champ3 ;
+    }
+
+  void Aff_struct1_Tiic ( Typestr_Tiic S, Type1_Tiic Val )
+    {
+       S->Champ1 = Val ;
+    }
+
+  void Aff_struct2_Tiic ( Typestr_Tiic S, Type2_Tiic Val )
+    {
+       S->Champ2 = Val ;
+    }
+
+  void Aff_struct3_Tiic ( Typestr_Tiic S, Type3_Tiic Val )
+    {
+      strcpy( S->Champ3 , Val );
+    }
+
+
+  /** Arbres de recherche binaire **/
+
+  typedef Typestr_Tiic Typeelem_ATiic   ;
+  typedef struct Noeud_ATiic * Pointeur_ATiic ;
+
+  struct Noeud_ATiic
+    {
+      Typeelem_ATiic  Val ;
+      Pointeur_ATiic Fg ;
+      Pointeur_ATiic Fd ;
+      Pointeur_ATiic Pere ;
+     } ;
+
+  Typeelem_ATiic Info_ATiic( Pointeur_ATiic P )
+    { return P->Val;   }
+
+  Pointeur_ATiic Fg_ATiic( Pointeur_ATiic P)
+    { return P->Fg ; }
+
+  Pointeur_ATiic Fd_ATiic( Pointeur_ATiic P)
+    { return P->Fd ; }
+
+  Pointeur_ATiic Pere_ATiic( Pointeur_ATiic P)
+    { return P->Pere ; }
+
+  void Aff_info_ATiic ( Pointeur_ATiic P, Typeelem_ATiic Val)
+    {
+      Typeelem_ATiic _Temp ;
+      _Temp = malloc(sizeof(Type_Tiic));
+      _Temp->Champ3 = malloc(2 * sizeof(char));
+      /* Affectation globale de structure */
+      _Temp->Champ1 = Val->Champ1;
+      _Temp->Champ2 = Val->Champ2;
+      strcpy(_Temp->Champ3, Val->Champ3);
+      Val = _Temp ;
+       P->Val = Val ;
+    }
+
+  void Aff_fg_ATiic( Pointeur_ATiic P, Pointeur_ATiic Q)
+    { P->Fg =  Q;  }
+
+  void Aff_fd_ATiic( Pointeur_ATiic P, Pointeur_ATiic Q)
+    { P->Fd =  Q ; }
+
+  void Aff_pere_ATiic( Pointeur_ATiic P, Pointeur_ATiic Q)
+    { P->Pere =  Q ; }
+
+  void Creernoeud_ATiic( Pointeur_ATiic *P)
+    {
+      *P = (struct Noeud_ATiic *) malloc( sizeof( struct Noeud_ATiic))   ;
+      (*P)->Val = malloc(sizeof(Type_Tiic));
+      (*P)->Val->Champ3 = malloc( 2 * sizeof(char));
+      (*P)->Fg = NULL;
+      (*P)->Fd = NULL;
+      (*P)->Pere = NULL;
+    }
+
+  void Liberernoeud_ATiic( Pointeur_ATiic P)
+    { free( P ) ; }
+
+
+  /** Implémentation **\: TABLEAU DE ARBRES BINAIRES DE STRUCTURES**/
+
+  /** Tableaux **/
+
+  typedef Pointeur_ATssic Typeelem_V10ATssic ;
+  typedef Typeelem_V10ATssic * Typevect_V10ATssic ;
+
+  Typeelem_V10ATssic Element_V10ATssic ( Typevect_V10ATssic V , int I1  )
+    {
+      return  *(V + I1-1 ) ;
+    }
+
+  void Aff_element_V10ATssic ( Typevect_V10ATssic V  , int I1 ,  Typeelem_V10ATssic Val )
+    {
+      *(V + I1-1 ) = Val ;
+    }
+
+
+  /** Implémentation **\: PILE DE ARBRES BINAIRES DE STRUCTURES**/
+  /** Piles **/
+
+  typedef Pointeur_ATssic Typeelem_PATssic ;
+  typedef struct Maillon_PATssic * Pointeur_PATssic ;
+  typedef   Pointeur_PATssic  Typepile_PATssic  ;
+
+  struct Maillon_PATssic
+    {
+      Typeelem_PATssic  Val ;
+      Pointeur_PATssic Suiv ;
+    } ;
+
+  void Creerpile_PATssic( Pointeur_PATssic *P )
+    { *P = NULL ; }
+
+  bool Pilevide_PATssic ( Pointeur_PATssic P )
+    { return  (P == NULL ); }
+
+  void Empiler_PATssic ( Pointeur_PATssic *P,  Typeelem_PATssic Val )
+    {
+      Pointeur_PATssic Q;
+
+      Q = (struct Maillon_PATssic *) malloc( sizeof( struct Maillon_PATssic))   ;
+      Q->Val = Val ;
+      Q->Suiv = *P;
+      *P = Q;
+    }
+
+  void Depiler_PATssic ( Pointeur_PATssic *P,  Typeelem_PATssic *Val )
+    {
+      Pointeur_PATssic Sauv;
+
+      if (! Pilevide_PATssic (*P) )
+        {
+          *Val = (*P)->Val ;
+          Sauv = *P;
+          *P = (*P)->Suiv;
+          free(Sauv);
+        }
+      else printf ("%s \n", "Pile vide");
+    }
+
+
+  /** Implémentation **\: PILE DE ARBRES BINAIRES DE STRUCTURES**/
+  /** Piles **/
+
+  typedef Pointeur_ATiic Typeelem_PATiic ;
+  typedef struct Maillon_PATiic * Pointeur_PATiic ;
+  typedef   Pointeur_PATiic  Typepile_PATiic  ;
+
+  struct Maillon_PATiic
+    {
+      Typeelem_PATiic  Val ;
+      Pointeur_PATiic Suiv ;
+    } ;
+
+  void Creerpile_PATiic( Pointeur_PATiic *P )
+    { *P = NULL ; }
+
+  bool Pilevide_PATiic ( Pointeur_PATiic P )
+    { return  (P == NULL ); }
+
+  void Empiler_PATiic ( Pointeur_PATiic *P,  Typeelem_PATiic Val )
+    {
+      Pointeur_PATiic Q;
+
+      Q = (struct Maillon_PATiic *) malloc( sizeof( struct Maillon_PATiic))   ;
+      Q->Val = Val ;
+      Q->Suiv = *P;
+      *P = Q;
+    }
+
+  void Depiler_PATiic ( Pointeur_PATiic *P,  Typeelem_PATiic *Val )
+    {
+      Pointeur_PATiic Sauv;
+
+      if (! Pilevide_PATiic (*P) )
+        {
+          *Val = (*P)->Val ;
+          Sauv = *P;
+          *P = (*P)->Suiv;
+          free(Sauv);
+        }
+      else printf ("%s \n", "Pile vide");
+    }
+   /** Implémentation **: **/
+   typedef struct resultat resultat;
+   struct resultat {char pays[30];int nd ;int nr;};
+
+  /** Fonctions standards **/
+
+  int Aleanombre( int N )
+    { return ( rand() % N ); }
+
+  char  *Aleachaine ( int N )
+    {
+      int k;
+      char  * Chaine = malloc(N+1);
+
+      char Chr1[26] = "abcdefghijklmnopqrstuvwxyz";
+      char Chr2[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+      for (k=0;k<N; k++)
+        switch ( rand() % 2 )
+        {
+            case 0 :  *(Chaine+k) = Chr1[rand() % 26] ; break ;
+            case 1 :  *(Chaine+k) = Chr2[rand() % 26] ; break ;
+        }
+      Chaine[k] =  '\0' ;
+
+      return (Chaine);
+    }
+
+  int Longchaine ( string255 Ch  )
+  {
+    return strlen(Ch);
+  }
+
+
+  /** Prototypes des fonctions **/
+
+  void Rech_nom (Pointeur_ATssic *R , string255 *Nom , int *Age , Pointeur_ATssic *Pr , Pointeur_ATssic *P);
+  void Rech_prenom (Pointeur_ATssic *R , string255 *Prenom , int *Age , Pointeur_ATssic *Pr , Pointeur_ATssic *P);
+  void Inser (Pointeur_ATssic *R);
+  void Parcour_inordre (Pointeur_ATssic *R);
+  string255  Gen_chaine (int *Inf , int *Sup) ;
+  string2  Gen_result (string2 *C) ;
+  void Creation_pays (Typevect_V10ATssic *T);
+  void Inser_glob (Pointeur_ATiic *R2 , int *Age , int *Nb_occ , string2 *Resultat);
+  void Rech_age (Pointeur_ATiic *R2 , int *Age , Pointeur_ATiic *Pr);
+  int  Nb_occur (Typevect_V10ATssic *T , int *Age , string2 *Resultat) ;
+  void Creation_pays_saff (Typevect_V10ATssic *T);
+  void Arb_global (Typevect_V10ATssic *T , Pointeur_ATiic *R2);
+  void Parcour_inordre_glb (Pointeur_ATiic *S2);
+  float  Pourcentage (Pointeur_ATiic *S2 , int *Inf , int *Sup , string2 *Resultat) ;
+  resultat *getresul (int taille);
+  void Inser_c (Pointeur_ATssic *R,char *resul );
+  int Min (A,B);
+  void nv_nr_nd(int seuil, int *ND,int *NR);
+  void Creation_pays_c (Typevect_V10ATssic *T,int Nbpays,int seuil);
+  /**************************************************************************/
+  void Rech_nom (Pointeur_ATssic *R , string255 *Nom , int *Age , Pointeur_ATssic *Pr , Pointeur_ATssic *P)
+    {
+      /** Variables locales **/
+      bool Trouve;
+
+      /** Corps du module **/
+     Trouve  =  False ;
+     *Pr  =  NULL ;
+     while( ( *R != NULL ) && ( ! Trouve ))  {
+       if(strcmp( Struct1_Tssic ( Info_ATssic ( *R )  ), *Nom) == 0 )   {
+         Trouve  =  True ;
+         }
+       else
+         {
+         *Pr  =  *R ;
+         if( *Age > Struct3_Tssic ( Info_ATssic ( *R )  ))   {
+           *R  =  Fd_ATssic ( *R ) ;
+           }
+         else
+           {
+           *R  =  Fg_ATssic ( *R ) ;
+
+         } ;
+
+       } ;
+
+     } ;
+     *P  =  *R ;
+
+    }
+  /****************************************************************************/
+  void Rech_prenom (Pointeur_ATssic *R , string255 *Prenom , int *Age , Pointeur_ATssic *Pr , Pointeur_ATssic *P)
+    {
+      /** Variables locales **/
+      bool Trouve;
+
+      /** Corps du module **/
+     Trouve  =  False ;
+     *Pr  =  NULL ;
+     while( ( *R != NULL ) && ( ! Trouve ))  {
+       if(strcmp( Struct2_Tssic ( Info_ATssic ( *R )  ), *Prenom) == 0 )   {
+         Trouve  =  True ;
+         }
+       else
+         {
+         *Pr  =  *R ;
+         if( *Age > Struct3_Tssic ( Info_ATssic ( *R )  ))   {
+           *R  =  Fd_ATssic ( *R ) ;
+           }
+         else
+           {
+           *R  =  Fg_ATssic ( *R ) ;
+
+         } ;
+
+       } ;
+
+     } ;
+     *P  =  *R ;
+
+    }
+  /**************************************************************************/
+  void Inser (Pointeur_ATssic *R)
+    {
+      /** Variables locales **/
+      Pointeur_ATssic Q;
+      Pointeur_ATssic Pr;
+      Pointeur_ATssic P;
+      Pointeur_ATssic K;
+      Pointeur_ATssic S;
+      int Age;
+      string255 Nom;
+      string255 Prenom;
+      string2 Resultat;
+      Typestr_Tssic U;
+      int _Px1;
+      int _Px2;
+      int _Px3;
+      int _Px4;
+
+      /** Corps du module **/
+     Nom = malloc(255 * sizeof(char));
+     Prenom = malloc(255 * sizeof(char));
+     Resultat = malloc(2 * sizeof(char));
+     U = malloc(sizeof(Type_Tssic));
+     U->Champ1 = malloc(255 * sizeof(char));
+     U->Champ2 = malloc(255 * sizeof(char));
+     U->Champ4 = malloc(2 * sizeof(char));
+     _Px1 =  3 ;
+     _Px2 =  10 ;
+     strcpy (Nom,   Gen_chaine ( &_Px1, &_Px2)) ;
+     _Px3 =  3 ;
+     _Px4 =  10 ;
+     strcpy (Prenom,   Gen_chaine ( &_Px3, &_Px4)) ;
+     Age  =  Aleanombre(100 ) ;
+     strcpy (Resultat,   Gen_result ( & Resultat )) ;
+     S  =  *R ;
+     if( S == NULL)   {
+       Creernoeud_ATssic (& S ) ;
+       Aff_struct1_Tssic ( U  , Nom ) ;
+       Aff_struct2_Tssic ( U  , Prenom ) ;
+       Aff_struct3_Tssic ( U  , Age ) ;
+       Aff_struct4_Tssic ( U  , Resultat ) ;
+       Aff_info_ATssic ( S , U ) ;
+       *R  =  S ;
+       }
+     else
+       {
+       Rech_nom ( & S , & Nom , & Age , & Pr , & P ) ;
+       S  =  *R ;
+       Rech_prenom ( & S , & Prenom , & Age , & Pr , & K ) ;
+       if( ( P == NULL ) && ( K == NULL ))   {
+         Creernoeud_ATssic (& Q ) ;
+         Aff_struct1_Tssic ( U  , Nom ) ;
+         Aff_struct2_Tssic ( U  , Prenom ) ;
+         Aff_struct3_Tssic ( U  , Age ) ;
+         Aff_struct4_Tssic ( U  , Resultat ) ;
+         Aff_info_ATssic ( Q , U ) ;
+         Aff_fg_ATssic ( Q , NULL ) ;
+         Aff_fd_ATssic ( Q , NULL ) ;
+         if( Age > Struct3_Tssic ( Info_ATssic ( Pr )  ))   {
+           Aff_fd_ATssic ( Pr , Q ) ;
+           }
+         else
+           {
+           Aff_fg_ATssic ( Pr , Q ) ;
+
+         } ;
+
+       } ;
+       S  =  Pr ;
+
+     } ;
+
+    }
+  /*****************************************************************************/
+   void Parcour_inordre (Pointeur_ATssic *R)
+    {
+      /** Variables locales **/
+      Pointeur_ATssic _Px1;
+      Pointeur_ATssic _Px2;
+
+      /** Corps du module **/
+     if( *R != NULL)   {
+       _Px1 =  Fg_ATssic(*R ) ;
+       Parcour_inordre ( &_Px1) ;
+       printf ( " \t\t\t\t%s", "  Nom= " );
+       printf ( " %s\n", Struct1_Tssic(Info_ATssic(*R)) ) ;
+       printf ( " \t\t\t\t%s", "  prenom= " );
+       printf ( " %s\n", Struct2_Tssic(Info_ATssic(*R)) ) ;
+       printf ( " \t\t\t\t%s", "  Age= " );
+       printf ( " %d\n", Struct3_Tssic(Info_ATssic(*R)) ) ;
+       printf ( " \t\t\t\t%s", "  Resultat= " );
+       printf ( " %s\n", Struct4_Tssic(Info_ATssic(*R)) ) ;
+       printf ( " \t\t\t\t%s\n", "-------------------" ) ;
+       _Px2 =  Fd_ATssic(*R ) ;
+       Parcour_inordre ( &_Px2) ;
+
+     } ;
+
+    }
+  /*****************************************************************************/
+  string255  Gen_chaine (int *Inf , int *Sup)
+    {
+      /** Variables locales **/
+      string255  Gen_chaine2 ;
+      int I;
+      string255 Ch;
+
+      /** Corps du module **/
+     Ch = malloc(255 * sizeof(char));
+     Gen_chaine2 = malloc(255 * sizeof(char));
+     I  =  Aleanombre ( *Sup ) + 1 ;
+     strcpy (Ch,   Aleachaine ( I )) ;
+     while( Longchaine ( Ch ) < *Inf)  {
+       I  =  Aleanombre ( *Sup ) + 1 ;
+       strcpy (Ch,   Aleachaine ( I )) ;
+
+     } ;
+     strcpy (Gen_chaine2,   Ch) ;
+
+     return Gen_chaine2 ;
+    }
+  /**************************************************************************/
+  string2  Gen_result (string2 *C)
+    {
+      /** Variables locales **/
+      string2  Gen_result2 ;
+
+      /** Corps du module **/
+     Gen_result2 = malloc(2 * sizeof(char));
+     if( Aleanombre(2 ) == 1)   {
+       strcpy (Gen_result2,   "R") ;
+       }
+     else
+       {
+       strcpy (Gen_result2,   "D") ;
+
+     } ;
+
+     return Gen_result2 ;
+    }
+  /*************************************************************************/
+  void Creation_pays (Typevect_V10ATssic *T)
+    {
+      /** Variables locales **/
+      Pointeur_ATssic R =NULL;
+      int I;
+      int J;
+
+      /** Corps du module **/
+     for( J  =  1 ;J <=  10 ; ++J) {
+       for( I  =  1 ;I <=  Aleanombre(20 ) + 1 ; ++I) {
+         Inser ( & R ) ;
+
+       } ;
+       Aff_element_V10ATssic(*T , J   , R ) ;
+       printf ( "\t\t\t//*****************Pays %d******************//\n",J );
+       Parcour_inordre ( & R ) ;
+       R  =  NULL;
+     } ;
+
+    }
+  /*************************************************************************/
+                         /*DEUXIEME PARTIE*/
+  /*************************************************************************/
+  void Inser_glob (Pointeur_ATiic *R2 , int *Age , int *Nb_occ , string2 *Resultat)
+    {
+      /** Variables locales **/
+      Pointeur_ATiic Q;
+      Pointeur_ATiic Pr;
+      Pointeur_ATiic S;
+      Typestr_Tiic U;
+
+      /** Corps du module **/
+     U = malloc(sizeof(Type_Tiic));
+     U->Champ3 = malloc(2 * sizeof(char));
+     S  =  *R2 ;
+     if( S == NULL)   {
+       Creernoeud_ATiic (& S ) ;
+       Aff_struct1_Tiic ( U  , *Age ) ;
+       Aff_struct2_Tiic ( U  , *Nb_occ ) ;
+       Aff_struct3_Tiic ( U  , *Resultat ) ;
+       Aff_info_ATiic ( S , U ) ;
+       *R2  =  S ;
+       }
+     else
+       {
+       Rech_age ( & S , & *Age , & Pr ) ;
+       Creernoeud_ATiic (& Q ) ;
+       Aff_struct1_Tiic ( U  , *Age ) ;
+       Aff_struct2_Tiic ( U  , *Nb_occ ) ;
+       Aff_struct3_Tiic ( U  , *Resultat ) ;
+       Aff_info_ATiic ( Q , U ) ;
+       Aff_fg_ATiic ( Q , NULL ) ;
+       Aff_fd_ATiic ( Q , NULL ) ;
+       if( *Age > Struct1_Tiic ( Info_ATiic ( Pr )  ))   {
+         Aff_fd_ATiic ( Pr , Q ) ;
+         }
+       else
+         {
+         if( *Age < Struct1_Tiic ( Info_ATiic ( Pr )  ))   {
+           Aff_fg_ATiic ( Pr , Q ) ;
+           }
+         else
+           {
+           if( ( *Age == Struct1_Tiic ( Info_ATiic ( Pr )  ) ) && (strcmp( *Resultat, "D") == 0  ))   {
+             Aff_fg_ATiic ( Pr , Q ) ;
+             }
+           else
+             {
+             Aff_fd_ATiic ( Pr , Q ) ;
+
+           } ;
+
+         } ;
+
+       } ;
+       S  =  Pr ;
+
+     } ;
+
+    }
+  /***********************************************************************/
+  void Rech_age (Pointeur_ATiic *R2 , int *Age , Pointeur_ATiic *Pr)
+    {
+      /** Variables locales **/
+      bool Trouve;
+      Pointeur_ATiic K=NULL;
+
+      /** Corps du module **/
+     Trouve  =  False ;
+     *Pr  =  NULL ;
+     while( ( *R2 != NULL ) && ( ! Trouve ))  {
+       if( Struct1_Tiic ( Info_ATiic ( *R2 )  ) == *Age)   {
+         Trouve  =  True ;
+         *Pr  =  *R2 ;
+         }
+       else
+         {
+         *Pr  =  *R2 ;
+         if( *Age > Struct1_Tiic ( Info_ATiic ( *R2 )  ))   {
+           *R2  =  Fd_ATiic ( *R2 ) ;
+           }
+         else
+           {
+           *R2  =  Fg_ATiic ( *R2 ) ;
+
+         } ;
+
+       } ;
+
+     } ;
+
+    }
+  /********************************************************************/
+  int  Nb_occur (Typevect_V10ATssic *T , int *Age , string2 *Resultat)
+    {
+      /** Variables locales **/
+      int  Nb_occur2 ;
+      Pointeur_PATssic Pil=NULL;
+      Pointeur_ATssic R=NULL;
+      bool Fini;
+      int Cpt;
+
+      int J;
+
+      /** Corps du module **/
+     Cpt  =  0 ;
+     for( J  =  1 ;J <=  10 ; ++J) {
+       Fini  =  False ;
+       R  =  Element_V10ATssic ( *T , J   ) ;
+       while( ! Fini)  {
+         while( R != NULL)  {
+           Empiler_PATssic (& Pil , R ) ;
+           R  =  Fg_ATssic ( R ) ;
+
+         } ;
+         if( ! Pilevide_PATssic ( Pil ))   {
+           Depiler_PATssic (& Pil , &R ) ;
+           if( ( Struct3_Tssic ( Info_ATssic ( R )  ) == *Age ) && (strcmp( Struct4_Tssic ( Info_ATssic ( R )  ), *Resultat) == 0  ))   {
+             Cpt  =  Cpt + 1 ;
+
+           } ;
+           R  =  Fd_ATssic ( R ) ;
+           }
+         else
+           {
+           Fini  =  True ;
+
+         } ;
+
+       } ;
+
+     } ;
+     Nb_occur2  =  Cpt ;
+
+     return Nb_occur2 ;
+    }
+  /******************************************************************************/
+  void Creation_pays_saff (Typevect_V10ATssic *T)
+    {
+      /** Variables locales **/
+      Pointeur_ATssic R =NULL;
+      int J;
+      int I;
+
+      /** Corps du module **/
+     for( J  =  1 ;J <=  10 ; ++J) {
+       for( I  =  1 ;I <=  Aleanombre(20 ) + 1 ; ++I) {
+         Inser ( & R ) ;
+
+       } ;
+       Aff_element_V10ATssic ( *T , J   , R ) ;
+       R  =  NULL ;
+
+     } ;
+
+    }
+  /******************************************************************************/
+  void Arb_global (Typevect_V10ATssic *T , Pointeur_ATiic *R2)
+    {
+      /** Variables locales **/
+      string2 A;
+      string2 B;
+      int I;
+      int Nb;
+
+      /** Corps du module **/
+      if (*T==NULL) printf("\t  Vos arbres de pays sont vides veuillez les creer (option1) Pour avoire l'arbre globale!");
+      else {
+     A = malloc(2 * sizeof(char));
+     B = malloc(2 * sizeof(char));
+     strcpy (A,   "D") ;
+     strcpy (B,   "R") ;
+     for( I  =  0 ;I <=  100 ; ++I) {
+       Nb  =  Nb_occur ( & *T , & I , & A ) ;
+       if( ( Nb != 0 ))   {
+         Inser_glob ( & *R2 , & I , & Nb , & A ) ;
+
+       } ;
+       Nb  =  Nb_occur ( & *T , & I , & B ) ;
+       if( ( Nb != 0 )) {
+         Inser_glob ( & *R2 , & I , & Nb , & B ) ;
+
+       } ;
+
+     } ;
+     Parcour_inordre_glb ( & *R2 ) ;}
+
+    }
+  /*****************************************************************************/
+  void Parcour_inordre_glb (Pointeur_ATiic *S2)
+    {
+      /** Variables locales **/
+
+      Pointeur_ATiic R2=NULL;
+      Pointeur_ATiic _Px1=NULL;
+      Pointeur_ATiic _Px2=NULL;
+
+      /** Corps du module **/
+     R2  =  *S2 ;
+     if( R2 != NULL)   {
+       _Px1 =  Fg_ATiic(R2 ) ;
+       Parcour_inordre_glb ( &_Px1) ;
+       printf ( " %s\n", "\t\t\t\t-------------------" ) ;
+       printf ( " \t\t\t\t%s", "  Age= " );
+       printf ( " %d\n", Struct1_Tiic(Info_ATiic(R2)) ) ;
+       printf ( " \t\t\t\t%s", "  Nombre de occurences= " );
+       printf ( " %d\n", Struct2_Tiic(Info_ATiic(R2)) ) ;
+       printf ( " \t\t\t\t%s", "  Resultat " );
+       printf ( " %s\n", Struct3_Tiic(Info_ATiic(R2)) ) ;
+       _Px2 =  Fd_ATiic(R2 ) ;
+       Parcour_inordre_glb ( &_Px2) ;
+
+     } ;
+
+    }
+  /****************************************************************************/
+  float  Pourcentage (Pointeur_ATiic *S2 , int *Inf , int *Sup , string2 *Resultat)
+    {
+      /** Variables locales **/
+      float  Pourcentage2 =0;
+      Pointeur_PATiic Pil=NULL;
+      Pointeur_ATiic R2=NULL;
+      float Nb_occ;
+      float Nb_pers;
+      bool Fini;
+
+      /** Corps du module **/
+      if (*S2==NULL) return 0;
+      else
+      {
+        R2  =  *S2 ;
+        Nb_occ  =  0 ;
+        Nb_pers  =  0 ;
+        Fini  =  False ;
+        while( ! Fini)  {
+        while( R2 != NULL)
+        {
+           Empiler_PATiic(&Pil , R2 ) ;
+           R2  =  Fg_ATiic(R2 ) ;
+        } ;
+        if( ! Pilevide_PATiic(Pil ))   {
+         Depiler_PATiic(&Pil , &R2 ) ;
+         Nb_occ  =  Nb_occ + Struct2_Tiic(Info_ATiic(R2 )  ) ;
+         if( ( ( Struct1_Tiic(Info_ATiic(R2 )  ) <= *Sup ) && ( Struct1_Tiic(Info_ATiic(R2 )  ) >= *Inf ) ))   {
+           if( (strcmp( Struct3_Tiic(Info_ATiic(R2 )  ), *Resultat) == 0  ))   {
+             Nb_pers  =  Nb_pers + Struct2_Tiic(Info_ATiic(R2 )  ) ;
+
+           } ;
+
+         } ;
+         R2  =  Fd_ATiic(R2 ) ;
+         }
+       else
+         {
+         Fini  =  True ;
+
+       } ;
+
+     } ;
+     Pourcentage2  =  ( ( Nb_pers * 100 ) / Nb_occ ) ;
+
+     return Pourcentage2 ;
+      }
+
+    }
+    //==================partie3================
+
+   resultat *getresul (int taille)
+   {   /** Variables locales **/
+       resultat *tab= malloc(taille*sizeof(resultat));
+       int pos=0,i;
+       char chaine[200];
+       char *ch;
+       FILE *f=NULL;
+       /** Corps du module **/
+       f=fopen("resultat.txt","r");
+       if (f!=NULL)
+       {
+          while(fgets(chaine,200,f)!=NULL)
+          {
+             ch= strtok(chaine,";");
+             i=0;
+             while (ch != NULL)
+             {
+                if (i==0) strcpy(tab[pos].pays,ch);
+                else if (i==1) tab[pos].nd=atoi(ch);
+                else tab[pos].nr=atoi(ch);
+                i++;
+                ch=strtok(NULL,";");
+            }
+            pos++;
+        }
+    }
+    fclose(f);
+    return tab;
+}
+ void Inser_c (Pointeur_ATssic *R,char *resul )
+    {
+      /** Variables locales **/
+      Pointeur_ATssic Q;
+      Pointeur_ATssic Pr;
+      Pointeur_ATssic P;
+      Pointeur_ATssic K;
+      Pointeur_ATssic S;
+      int Age;
+      string255 Nom;
+      string255 Prenom;
+      string2 Resultat;
+      Typestr_Tssic U;
+      int _Px1;
+      int _Px2;
+      int _Px3;
+      int _Px4;
+
+      /** Corps du module **/
+     Nom = malloc(255 * sizeof(char));
+     Prenom = malloc(255 * sizeof(char));
+     Resultat = malloc(2 * sizeof(char));
+     U = malloc(sizeof(Type_Tssic));
+     U->Champ1 = malloc(255 * sizeof(char));
+     U->Champ2 = malloc(255 * sizeof(char));
+     U->Champ4 = malloc(2 * sizeof(char));
+     _Px1 =  3 ;
+     _Px2 =  10 ;
+     strcpy (Nom,   Gen_chaine ( &_Px1, &_Px2)) ;
+     _Px3 =  3 ;
+     _Px4 =  10 ;
+     strcpy (Prenom,   Gen_chaine ( &_Px3, &_Px4)) ;
+     Age  =  Aleanombre(100 ) ;
+     strcpy(Resultat ,  resul) ;
+     S  =  *R ;
+     if( S == NULL)   {
+       Creernoeud_ATssic (& S ) ;
+       Aff_struct1_Tssic ( U  , Nom ) ;
+       Aff_struct2_Tssic ( U  , Prenom ) ;
+       Aff_struct3_Tssic ( U  , Age ) ;
+       Aff_struct4_Tssic ( U  , Resultat ) ;
+       Aff_info_ATssic ( S , U ) ;
+       *R  =  S ;
+       }
+     else
+       {
+       Rech_nom ( & S , & Nom , & Age , & Pr , & P ) ;
+       S  =  *R ;
+       Rech_prenom ( & S , & Prenom , & Age , & Pr , & K ) ;
+       if( ( P == NULL ) && ( K == NULL ))   {
+         Creernoeud_ATssic (& Q ) ;
+         Aff_struct1_Tssic ( U  , Nom ) ;
+         Aff_struct2_Tssic ( U  , Prenom ) ;
+         Aff_struct3_Tssic ( U  , Age ) ;
+         Aff_struct4_Tssic ( U  , Resultat ) ;
+         Aff_info_ATssic ( Q , U ) ;
+         Aff_fg_ATssic ( Q , NULL ) ;
+         Aff_fd_ATssic ( Q , NULL ) ;
+         if( Age > Struct3_Tssic ( Info_ATssic ( Pr )  ))   {
+           Aff_fd_ATssic ( Pr , Q ) ;
+           }
+         else
+           {
+           Aff_fg_ATssic ( Pr , Q ) ;
+
+         } ;
+
+       } ;
+       S  =  Pr ;
+
+     } ;
+
+    }
+    int Min (A,B)
+    {
+        /** Corps du module **/
+        if (A<B) return A;
+        return B;
+    }
+    void nv_nr_nd(int seuil, int *ND,int *NR)
+    {
+        /** Variables locales **/
+        float Pourcentnd;
+        /** Corps du module **/
+        Pourcentnd=((float)*ND*100)/((float)*ND+(float)*ND);
+        *ND=(Pourcentnd*seuil)/100;
+        *NR=seuil-*ND;
+
+    }
+   void Creation_pays_c (Typevect_V10ATssic *T,int Nbpays,int seuil)
+{
+    /** Variables locales **/
+    Pointeur_ATssic R =NULL;
+    int I;
+    int J;
+    int nbper;
+    int nd,nr;
+    resultat *t=getresul(Nbpays);
+    /** Corps du module **/
+
+    for( J  =  0 ;J <= Nbpays -1; ++J)
+    {   nd=t[J].nd;
+        nr=t[J].nr;
+        nbper=Min(seuil,(nd+nr));
+        if (nbper==seuil) nv_nr_nd(seuil,&nd,&nr);
+        for( I  =  1 ;I <=  nbper  ; ++I)
+        {
+            if (nr!=0) {Inser_c ( & R ,"R") ;nr--;}
+            if (nd!=0) {Inser_c ( & R ,"D") ;nd--;}
+        }
+        Aff_element_V10ATssic(*T , J   , R ) ;
+        color(10,0);
+        printf ( "\t\t\t//***************** %s******************//\n",t[J].pays );
+        color(15,0);
+        Parcour_inordre ( & R ) ;
+        R  =  NULL;
+     }
+}
+//**************************************
+//**************************************
+             /**-------------------------- Autres fonctions pour l'inerface (IHM)------------------------------**/
+/*------------------------------------------------------------------------------------------------------------------------*/
+int wherey()
+{
+        CONSOLE_SCREEN_BUFFER_INFO coninfo;
+
+        GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &coninfo);
+        return coninfo.dwCursorPosition.Y;
+}
+/*------------------------------------------------------------------------------------------------------------------------*/
+void textcolor(unsigned int color)
+{
+    if (color >15 || color <=0)
+    {
+        HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hcon,15);
+
+    }
+    else
+    {
+        HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hcon,color);
+    }
+}
+/*------------------------------------------------------------------------------------------------------------------------*/
+void textbackground(int bcolor)
+{
+     WORD wColor;
+
+     HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+     CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+
+     if(GetConsoleScreenBufferInfo(hStdOut, &csbi))
+     {
+
+          wColor = (csbi.wAttributes & 0xF) | ((bcolor  << 4 ) & 0xF0);
+          SetConsoleTextAttribute(hStdOut, wColor);
+
+     }
+}
+/*------------------------------------------------------------------------------------------------------------------------*/
+int menu(int max,...) /* Fonction pour faire les choix */
+{
+   int choi,a,i,b,d,y;
+   char p[max];
+   char **choix=NULL;
+   choix=malloc(max*sizeof(p));
+   va_list marker;
+   va_start( marker,max );
+   for (i=0;i<max;i++)
+   {
+      choix[i] = va_arg( marker,char*);
+   }
+    va_end( marker );
+    d=wherey();
+    y=d;
+    textcolor (selected_color);
+    textbackground (selected_background);
+    printf("%s\n",choix[0]);
+    textbackground (not_selected_background);
+    textcolor(not_selected_color);
+    for (i=1;i<max;i++)
+    {
+        printf("%s\n",choix[i]);
+    }
+    abbbbb:
+    while((a=getch())==224)
+    {
+        b=getch();
+        if(b==80 && y<d+max-1)
+        {
+            gotoxy(1,y);
+            textcolor(not_selected_color);
+            i=y-d;
+            textbackground (not_selected_background);
+            printf("%s",choix[i]);
+            y++;
+            textcolor (selected_color);
+            gotoxy(1,y);
+            textbackground (selected_background);
+            printf("%s",choix[i+1]);
+        }
+        if(b==72 && y>d)
+        {
+            gotoxy(1,y);
+            textcolor(not_selected_color);
+            i=y-d;
+            textbackground (not_selected_background);
+            printf("%s",choix[i]);
+            y--;
+            textcolor (selected_color);
+            gotoxy(1,y);
+            textbackground (selected_background);
+            printf("%s",choix[i-1]);
+        }
+
+
+        }
+        if (a!=13)goto abbbbb;
+
+    choi=y-d;
+    textbackground (not_selected_background);
+    textcolor(not_selected_color);
+    gotoxy(1,d+4);
+    return choi+1;
+}
+/*------------------------------------------------------------------------------------------------------------------------*/
+COORD coord ={0,0};     /* Fonction pour changer la position d'ecriture */
+void gotoxy(int x, int y )
+{ coord.X=x;
+  coord.Y=y;
+  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
+}
+/*------------------------------------------------------------------------------------------------------------------------*/
+void color(int t,int f) /* Fonction pour changer les couleurs ( Texte / Arrière plan) */
+{
+        HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
+            SetConsoleTextAttribute(H,f*16+t);
+}
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+void affichage()
+{
+color(15,0);
+printf("\n *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   ");
+color(10,0);
+printf("              _");
+printf("                                                            \n");
+printf("              ");
+printf("|_|");
+printf("                                                           \n");
+printf("              ");
+printf("/_/");
+printf("                                                             \n");
+printf("     ");
+printf("___  ___ _");
+printf("                                                              \n");
+printf("    ");
+printf("/ _ \\/ __| |");
+printf("                                                            \n");
+printf("   ");
+printf("|  __/\\__ \\ |");
+printf("           \n");
+printf("    ");
+printf("\\___||___/_|");
+printf("             \n");
+printf("    ");
+printf("\t\t\t\t\t");
+printf("E");
+Sleep(200);
+color(15,0);
+printf("C");
+Sleep(200);
+printf("O");
+Sleep(200);
+printf("L");
+Sleep(200);
+printf("E");
+Sleep(200);
+printf(" ");
+Sleep(200);
+color(10,0);
+printf("N");
+color(15,0);
+Sleep(200);
+printf("A");
+Sleep(200);
+printf("T");
+Sleep(200);
+printf("I");
+Sleep(200);
+printf("O");
+Sleep(200);
+printf("N");
+Sleep(200);
+printf("A");
+Sleep(200);
+printf("L");
+Sleep(200);
+printf("E");
+Sleep(200);
+printf(" ");
+Sleep(200);
+color(10,0);
+printf("S");
+color(15,0);
+Sleep(200);
+printf("U");
+Sleep(200);
+printf("P");
+Sleep(200);
+printf("E");
+Sleep(200);
+printf("R");
+Sleep(200);
+printf("I");
+Sleep(200);
+printf("E");
+Sleep(200);
+printf("U");
+Sleep(200);
+printf("R");
+Sleep(200);
+printf("E");
+Sleep(200);
+printf(" ");
+Sleep(200);
+color(10,0);
+printf("D");
+Sleep(200);
+printf("'");
+Sleep(200);
+printf("I");
+Sleep(200);
+color(15,0);
+printf("N");
+Sleep(200);
+printf("F");
+Sleep(200);
+printf("O");
+Sleep(200);
+printf("R");
+Sleep(200);
+printf("M");
+Sleep(200);
+printf("A");
+Sleep(200);
+printf("T");
+Sleep(200);
+printf("I");
+Sleep(200);
+printf("Q");
+Sleep(200);
+printf("U");
+Sleep(200);
+printf("E");
+Sleep(200);
+printf("\n\n\t\t\t\t     ALGORITHME ET STRUCTURES DES DONNEES DYNAMIQUES\n");
+printf("\t\t\t\t\t\t      * ALSDD * \n");
+printf("\n");
+color(10,0);
+printf("\t\t\t-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- \n") ;
+color(15,0);
+printf("\n\t\t\t\t\t\tTravail Pratique N :2 ");
+printf("\n\t\t\t\t\t      Statistiques sur Covid-19 ");
+printf("\n\n");
+color(10,0);
+printf("\t\t\t\t\t\t   Realise par :");
+printf("\n\n");
+color(15,0);
+printf("\t\t\t\t         Djawad Eddine Fanit  ");
+color(10,0);
+printf(" &  ");
+color(15,0);
+printf("Aymen Berriche  ");
+printf("\n\n\t\t\t\t\t\t     Groupe : 05");
+printf("\n\n\t\t\t\t\t       Encadre Par :  ");
+Sleep(400);
+color(10,0);
+printf("P");
+Sleep(200);
+printf("r");
+Sleep(200);
+printf(" ");
+Sleep(200);
+printf("D");
+color(15,0);
+Sleep(200);
+printf(".");
+Sleep(200);
+printf("E");
+Sleep(200);
+printf(" ");
+Sleep(200);
+color(10,0);
+printf("Z");
+Sleep(200);
+color(15,0);
+printf("E");
+Sleep(200);
+printf("G");
+Sleep(200);
+printf("O");
+Sleep(200);
+printf("U");
+Sleep(200);
+color(10,0);
+printf("R");
+Sleep(200);
+printf("\n\n\t\t\t\t\t     Annee Universitaire : 2019 / 2020 ");
+printf("\n\n");
+color(10,0);
+printf("\t\t\t-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- \n") ;
+printf("\n");
+color(15,0);
+printf("\n *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   ");
+printf("\n\t\t\t\t            ");
+system("pause");
+}
+/*------------------------------------------------------------------------------------------------------------------------*/
+void NeigeBienvenu() /* Interface */
+{   int i ;
+    Sleep(1000) ;
+    for(i=0;i<7;i++)
+    {color(15,0);
+     printf("\n *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   ");
+     printf("\n   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *  ");
+     Sleep(300);
+    }
+      /* Ecriture lettre par lettre */
+     color(11,0);
+     gotoxy(55,16);
+     Sleep(1000) ;
+     printf("B");
+     Sleep(150);
+     printf("i");
+     Sleep(150);
+     printf("e");
+     Sleep(150);
+     printf("n");
+     Sleep(150);
+     printf("v");
+     Sleep(150);
+     printf("e");
+     Sleep(150);
+     printf("n");
+     Sleep(150);
+     printf("u");
+     Sleep(150);
+     printf("e");
+     Sleep(150);
+     gotoxy(40,21);
+     system("pause");
+     return 0 ;
+}
+
+
+void AuRevoir()
+{   system("cls");
+    color(11,0);
+    gotoxy(55,16);
+    Sleep(1000) ;
+    printf("A");
+    Sleep(150);
+    printf("u");
+    Sleep(150);
+    printf(" ");
+    Sleep(150);
+    printf("R");
+    Sleep(150);
+    printf("e");
+    Sleep(150);
+    printf("v");
+    Sleep(150);
+    printf("o");
+    Sleep(150);
+    printf("i");
+    Sleep(150);
+    printf("r");
+    Sleep(150);
+    printf(" ");
+    Sleep(150);
+    printf("!");
+    Sleep(150);
+    printf("\n\n\n\n\n\n\n\n\n\n");
+    exit(EXIT_FAILURE);
+}
+//**************************************
+//**************************************
+//**************************************
+void menu_func()
+{
+     int menu1,menu2;
+     int _Izw2, _Px1 ,_Px2 ;
+      Pointeur_ATiic R2=NULL;
+     Typevect_V10ATssic T =NULL;
+     affichage();
+     system("cls");
+     NeigeBienvenu() ;
+    do
+    {
+principal: system("cls") ;
+           printf("\n\n\n\n\n");
+           color(11,0);
+           printf("                                                      ---------------- \n");
+           color(9,0);
+           printf("   -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- ");
+           color(11,0);
+           printf("| Menu Principal |");
+           color(9,0);
+           printf(" -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+           color(11,0);
+           printf("                                                      ---------------- ");
+           printf("\n\n");
+           color(15,0);
+           printf("\n\t\t\t\t\t\t\tLa partie choisis : ");
+           printf("\n\t\t\t\t(Utilisez les touches Haut-Bas du clavier pour avoir votre choix) \n");
+           menu1= menu(5,"\t\t\t\t\t\t1 -  Creation des pays ? " , "\t\t\t\t\t\t2 -  Creation de l'arbre globale  ? " , "\t\t\t\t\t\t3 -  Pourcentage ?","\t\t\t\t\t\t4 -  Statistiques  ? ","\t\t\t\t\t\t5 -  Quitter ? " ) ;
+           system("cls");
+            switch (menu1)
+           {
+              case 1: /* Creation des pays */
+                 system("cls");
+                 color(11,0);
+                 printf("\n\n\n\n\n\n\n\t\t\t\t     La liste des pays:\n");
+                 color(15,0);
+                 T = malloc(10 * sizeof(Pointeur_ATssic));
+                 for (_Izw2=0; _Izw2<10; ++_Izw2)
+                     T[_Izw2] = malloc( sizeof(Pointeur_ATssic ));
+                 srand(time(0));
+                 Creation_pays ( & T ) ;
+                 printf("\n");
+                 goto finapartie;
+                 break;
+              case 2: /* Creation de l'arbre globale */
+                 system("cls");
+                 color(11,0);
+                 printf("\n\n\n\n\n\n\n\t\t\t\t     Votre liste est:");
+                 printf("\n\n");
+                 color(15,0);
+                 srand(time(0));
+                 Arb_global ( & T , & R2 ) ;
+                 printf("\n");
+                 goto finapartie;
+                 break;
+              case 3: /* Pourcentage */
+                  system("cls");
+
+                  int min =  0 ;
+                  int max =  0 ;
+                  string2 resul;
+                  resul = malloc(2 * sizeof(string2));
+                  color(11,0);
+                  printf("\n\t\t\t\t     L'age minimum est:");
+                  color(15,0);
+                  scanf("%d",&min);
+                  color(11,0);
+                  printf("\n\t\t\t\t     L'age maximum est:");
+                  color(15,0);
+                  scanf("%d",&max);
+                  color(11,0);
+                  printf("\n\t\t\t\t     Le resultat est(R/D):");
+                  color(15,0);
+                  scanf("%s",resul);
+                  strcpy(resul,strupr(resul));
+                  while (strcmp(resul,"R")!=0)
+                             {
+                                 if (strcmp(resul,"D")==0) break;
+                                 else
+                                 {
+                                     color(10,0);
+                                     printf("\n\t\t\t\tLe resultat est le caractere 'D' ou 'R'\n");
+                                     color(15,0);
+                                     printf("\n\t\t\t\t     Le resultat est (R/D): ");
+                                     color(11,0);
+                                     scanf("%s",resul);
+                                     strcpy(resul,strupr(resul));
+                                     color(15,0);
+                                    }
+
+                             }
+
+
+                    printf ( "\n\t\t\t\t     Le pourcentage est : " ) ;
+                    color(11,0);
+                    printf("%.2f%%",Pourcentage(&R2,&min,&max,&resul));
+                    color(15,0);
+                  printf("\n");
+              goto finapartie;
+              break;
+              case 4: /* Statistiques */
+                  system("cls");
+                  color(11,0);
+                  printf("\n\n\n\n\n\n\n\t\t\t\t     Votre liste est:");
+                  printf("\n\n");
+                  color(15,0);
+                  T = malloc(100 * sizeof(Pointeur_ATssic));
+                  for (_Izw2=0; _Izw2<10; ++_Izw2)
+                  T[_Izw2] = malloc( sizeof(Pointeur_ATssic ));
+                  Creation_pays_c ( & T,100,40000 ) ;
+                  printf("\n");
+              goto finapartie;
+              break;
+finapartie: /*Ce champs est commun pour tous les cas de choix ci-dessus(choix de partie) */
+color(11,0);
+printf("\n");
+printf("\t\t\t\t\t\tChoisissez !");
+printf("\n");
+menu2=menu(2 ,"\t\t\t\t\t1- Retourner au menu principal","\t\t\t\t\t2- Quitter");
+system("cls");
+switch(menu2)
+{
+case 1:
+goto principal;
+break;
+case 2:
+goto fin;
+break;
+}
+/*----------------------------------------------------------------------------------------------------------------------------*/
+
+fin:      case 5: /* Quitter */
+              AuRevoir();
+              break;
+              }
+
+        }while ((menu1 <1) || (menu1 >4));
+}
+  int main(int argc, char *argv[])
+    {
+     menu_func();
+      return 0;
+    }
